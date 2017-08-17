@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="{$Think.const.COMMON_STATIC}jquery/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+<div>
+    <div class="title">欢迎{$session_data.user_name}，最后一次登陆时间:{$session_data.last_time|date='Y-m-d H:i:s',###}，ip:{$session_data.last_ip}<a href="{:url('logout')}">点击退出</a></div>
+    <a href="{:url('chat/index')}">聊天室</a>
+</div>
+</body>
+</html>

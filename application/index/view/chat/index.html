@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="{$Think.const.COMMON_STATIC}jquery/jquery-3.1.1.min.js"></script>
+    <style>
+        ul li{
+            text-decoration: none;
+            text-align: left;
+            list-style: none;
+        }
+        .content{
+            margin: 0 auto;
+            width: 800px;
+            height: 500px;
+            background-color: #eeeeee;
+            border: 1px solid #56cbee;
+        }
+        .chat_title{
+            width: 800px;
+            height: 35px;
+            background-color: #cccccc;
+            line-height: 35px;
+            text-indent: 10px;
+            font-size: 17px;
+        }
+        .current_user{
+            display: inline-block;
+            float: right;
+            margin-right: 10px;
+        }
+        .chat_content{
+            width: 800px;
+            height: 465px;
+            margin: 0 auto;
+            background-color: #fff;
+        }
+        .member{
+            float: left;
+            margin-left: 10px;
+            width: 130px;
+            height: 465px;
+            border-right: 1px solid #eeeeee;
+        }
+        .member .member_title{
+            font-size: 15px;
+            margin-top: 10px;
+        }
+        .member .member_list{
+            margin-top: 5px;
+            font-size: 14px;
+            height: 425px;
+            overflow-y:scroll
+        }
+        .member .member_list ul{
+            padding: 0;
+            margin: 0;
+        }
+        .member .member_list ul li{
+            text-decoration: none;
+            text-align: left;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            height: 25px;
+            line-height: 25px;
+            text-indent: 5px;
+        }
+        .message{
+            float: left;
+            margin-left: 10px;
+            width: 640px;
+            height: 455px;
+            margin-top: 5px;
+            background-color: #fff;
+        }
+        .message_content{
+            width: 640px;
+            height: 300px;
+            background-color: #fff;
+            margin-top: 0;
+            border: 1px solid #ccc;
+            overflow-y: scroll;
+        }
+        .message_content_ul{
+            padding-left: 0px;
+            text-indent: 5px;
+            width: 610px;
+            margin-left: 6px;
+        }
+        .message_content_ul li{
+            margin: 5px 0;
+            border: 1px solid #f2e5ff;
+            border-radius: 5px;
+        }
+        .message_content_ul p{
+           padding: 0;
+            margin: 0;
+        }
+        .message_content_li_other p{
+            text-align: left;
+            font-size: 12px;
+        }
+        .message_content_li_me p{
+            text-align: right;
+            padding-right: 10px;
+            font-size: 13px;
+        }
+        .send_message{
+            width: 640px;
+            height: 130px;
+            background-color: #ffffff;
+            margin-top: 12px;
+        }
+        .send_message textarea{
+            width: 620px;
+            height: 95px;
+            border: 1px solid #ccc;
+        }
+        .send_message_now{
+            width: 620px;
+            height: auto;
+        }
+        .send_message_now button{
+            float: right;
+            margin-top: 6px;
+            padding: 3px 22px;
+            background-color: #09c106;
+            border: 1px solid #09c106;
+            border-radius: 3px;
+            color: #fff;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="content">
+    <div class="chat_title">高三一班<span class="current_user"></span></div>
+    <div class="chat_content">
+        <div class="member">
+            <div class="member_title">群成员21/86</div>
+            <div class="member_list">
+                <ul>
+                    <li>戏如雪</li>
+                    <li>张无忌</li>
+                    <li>刘德盛</li>
+                    <li>朝气蓬勃</li>
+                    <li>达沃斯大</li>
+                    <li>戏如雪</li>
+                    <li>张无忌</li>
+                    <li>刘德盛</li>
+                    <li>朝气蓬勃</li>
+                    <li>达沃斯大</li>
+                    <li>戏如雪</li>
+                    <li>张无忌</li>
+                    <li>刘德盛</li>
+                    <li>朝气蓬勃</li>
+                    <li>达沃斯大</li>
+                    <li>戏如雪</li>
+                    <li>张无忌</li>
+                    <li>刘德盛</li>
+                    <li>朝气蓬勃</li>
+                    <li>达沃斯大</li>
+                </ul>
+            </div>
+        </div>
+        <div class="message">
+            <div class="message_content">
+                <ul class="message_content_ul">
+                    <!--<li class="message_content_li_other">
+                        <p class="message_send_title">戏如雪 2017-07-27 12:21:20</p>
+                        <p class="message_send_content">我们中午出去玩吧</p>
+                    </li>
+                    <li class="message_content_li_me">
+                        <p class="message_send_title">戏如雪 2017-07-27 12:21:20</p>
+                        <p class="message_send_content">我们中午出去玩吧</p>
+                    </li>-->
+                </ul>
+            </div>
+            <div class="send_message">
+                <textarea name="send_message" id="send_message" cols="77" rows="4"></textarea>
+                <div  class="send_message_now">
+                    <button type="submit" id="send_message_now">发送</button>
+                </div>
+            </div>
+        </div>
+        <div style="clear: both"></div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    $(document).ready(function () {
+        document_center(".content");
+
+        $(".member_list ul li").click(function () {
+            $(this).siblings().css('background-color','#fff').css('color','#000') ;
+            $(this).css('background-color','#90dece').css('color','#fff') ;
+        });
+
+        $(".member_title").on("click",function () {
+            $(".member_list").fadeToggle();
+        });
+
+        /* 消息发送 */
+        $("#send_message_now").on("click",function () {
+            var send_message = $("#send_message").val();
+            if (send_message == ''){
+                alert('发送的消息不能为空！');
+                return false;
+            }
+            // ajax发送消息
+            $.post("{:url('send_message')}", {message:send_message}, function(data){
+                if(data.status ==1){
+                    $("#send_message").val('');
+                }else{
+                    alert(data.msg);
+                }
+            }, 'json');
+
+        });
+
+
+        /*
+         * 窗口居中处理
+         * @param  class_name class名称或者id名称
+         * */
+        function document_center(class_name) {
+            var document_width = $(document).outerWidth(true);//浏览器时下窗口文档body的总宽度 包括border padding margin
+            var document_height = $(document).outerHeight(true);//浏览器时下窗口文档body的总高度 包括border padding margin
+            var content_width = $(class_name).width();
+            var content_heigth = $(class_name).height();
+            if(document_width>content_width){
+                var top_width = (document_width-content_width)/2;
+            }else{
+                var top_width = 0;
+            }
+            if(document_height>content_heigth){
+                var top_height = (document_height-content_heigth)/2;
+            }else{
+                var top_height = 0;
+            }
+            //$(".content").css('margin-top',top_height+'px').css('margin-left',top_width+'px');
+            $(class_name).css('margin-top',top_height+'px');
+        }
+
+        /**
+         * 与GatewayWorker建立websocket连接，域名和端口改为你实际的域名端口，
+         * 其中端口为Gateway端口，即start_gateway.php指定的端口。
+         * start_gateway.php 中需要指定websocket协议，像这样
+         * $gateway = new Gateway(websocket://0.0.0.0:8282);
+         */
+        var ws = new WebSocket("ws://{$shop_url}:4010");
+        // 服务端主动推送消息时会触发这里的onmessage
+        ws.onmessage = function(e){
+            // json数据转换成js对象
+            var data = eval("("+e.data+")");
+            var type = data.type || '';
+            switch(type){
+                // Events.php中返回的init类型的消息，将client_id发给后台进行uid绑定
+                case 'init':
+                    // 利用jquery发起ajax请求，将client_id发给后端进行uid绑定
+                    $.post("{:url('bind_server')}", {client_id: data.client_id}, function(data){
+                        if(data.status ==1){
+                            $('.current_user').html(data.data.user_name)
+                        }else{
+                            alert(data.msg);
+                        }
+                    }, 'json');
+                    break;
+                // 当mvc框架调用GatewayClient发消息时直接alert出来
+                default :
+                    var my_user_id = {$session_data.user_id};
+                    var message = JSON.parse(e.data);
+                    var html = '';
+                    if(my_user_id == message.user_id){  // 自己发的
+                        html += '<li class="message_content_li_me">';
+                        html += ' <p class="message_send_title">'+message.user_name+' '+message.send_time+'</p>';
+                        html += ' <p class="message_send_content">'+message.message+'</p>';
+                        html += '</li>';
+                    }else{  // 别人发的
+                        html += '<li class="message_content_li_other">';
+                        html += ' <p class="message_send_title">'+message.user_name+' '+message.send_time+'</p>';
+                        html += ' <p class="message_send_content">'+message.message+'</p>';
+                        html += '</li>';
+                    }
+                    $(".message_content_ul").append(html);
+            }
+        };
+
+    });
+</script>
+</html>

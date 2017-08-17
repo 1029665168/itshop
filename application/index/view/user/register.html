@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="{$Think.const.COMMON_STATIC}jquery/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+<div>
+    <form action="{:url('register')}" method="post">
+        用户名<input type="text" name="user_name" value="">
+        密码<input type="password" name="password">
+        确认密码<input type="password" name="password_confirm">
+        电子邮箱<input type="text" name="email" value="">
+        <input type="reset" value="清空数据">
+        <input type="submit" value="提交注册">
+    </form>
+    <div>
+        <p>已有账号？<a href="{:url('login')}">点击登陆</a></p>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <!-- Apple devices fullscreen -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <!-- Apple devices fullscreen -->
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="shortcut icon" type="image/x-icon" href="./images/favicon.ico" media="screen"/>
+  <title>后台管理系统</title>
+  <script type="text/javascript">
+      var SITEURL = window.location.host;
+  </script>
+  <link href="{$Think.const.ADMIN_STATIC}css/main.css" rel="stylesheet" type="text/css">
+  <link href="{$Think.const.ADMIN_STATIC}js/jquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css">
+  <link href="{$Think.const.ADMIN_STATIC}font/css/font-awesome.min.css" rel="stylesheet" />
+  <script type="text/javascript" src="{$Think.const.ADMIN_STATIC}js/jquery.js"></script>
+  <script type="text/javascript" src="{$Think.const.ADMIN_STATIC}js/common.js"></script>
+  <script type="text/javascript" src="{$Think.const.ADMIN_STATIC}js/dialog/dialog.js" id="dialog_js"></script>
+  <script type="text/javascript" src="{$Think.const.ADMIN_STATIC}js/jquery-ui/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="{$Think.const.ADMIN_STATIC}js/jquery.cookie.js"></script>
+  <script type="text/javascript" src="{$Think.const.ADMIN_STATIC}js/jquery.bgColorSelector.js"></script>
+  <script type="text/javascript" src="{$Think.const.ADMIN_STATIC}js/admincp.js"></script>
+  <script type="text/javascript" src="{$Think.const.ADMIN_STATIC}js/jquery.validation.min.js"></script>
+
+  <script src="{$Think.const.ADMIN_STATIC}js/layer/layer.js"></script><!--弹窗js 参考文档 http://layer.layui.com/-->
+</head>
+<body>
+<div class="admincp-header">
+  <div class="bgSelector"></div>
+  <div id="foldSidebar"><i class="fa fa-outdent " title="展开/收起侧边导航"></i></div>
+  <div class="admincp-name" onClick="javascript:openItem('Index|welcome');">
+    <img src="{$Think.const.ADMIN_STATIC}images/Weblogo.png" alt="">
+  </div>
+  <div class="nc-module-menu">
+    <ul class="nc-row">
+      <li data-param="system"><a href="javascript:void(0);">系统</a></li>
+      <li data-param="shop"><a href="javascript:void(0);">商城</a></li>
+      <li data-param="resource"><a href="javascript:void(0);">插件</a></li>
+    </ul>
+  </div>
+  <div class="admincp-header-r">
+    <div class="manager">
+      <dl>
+        <dt class="name">admin</dt>
+        <dd class="group">管理员</dd>
+      </dl>
+      <span class="avatar">
+      <!-- 屏蔽管理员头像上传 -->
+        <!-- input name="_pic" type="file" class="admin-avatar-file" id="_pic" title="设置管理员头像"/ -->
+      <img alt="" tptype="admin_avatar" src="{$Think.const.ADMIN_STATIC}images/admint.png"> </span><i class="arrow" id="admin-manager-btn" title="显示快捷管理菜单"></i>
+      <div class="manager-menu">
+        <div class="title">
+          <h4>最后登录</h4>
+          <a href="javascript:void(0);" onClick="CUR_DIALOG = ajax_form('modifypw', '修改密码', 'System/modify_pwd.html');" class="edit-password">修改密码</a> </div>
+        <div class="login-date"> 2017-07-07 15:47:05 <span>(IP: 127.0.0.1 )</span> </div>
+      </div>
+    </div>
+    <ul class="operate nc-row">
+      <li style="display: none !important;" tptype="pending_matters"><a class="toast show-option" href="javascript:void(0);" onClick="$.cookie('commonPendingMatters', 0, {expires : -1});ajax_form('pending_matters', '待处理事项', 'http://www.tpshop.cn/admin/index.php?act=common&op=pending_matters', '480');" title="查看待处理事项">&nbsp;<em>0</em></a></li>
+      <li><a class="homepage show-option" target="_blank" href="/" title="新窗口打开商城首页">&nbsp;</a></li>
+      <li><a class="login-out show-option" href="{:url('login/logout')}" title="安全退出管理中心">&nbsp;</a></li>
+    </ul>
+  </div>
+  <div class="clear"></div>
+</div>
+<div class="admincp-container unfold">
+  <!--加载菜单-->
+  {include file="index/menu"}
+  <div class="admincp-container-right">
+    <div class="top-border"></div>
+    <iframe src="" id="workspace" name="workspace" style="overflow: visible;" frameborder="0" width="100%" height="94%" scrolling="yes"></iframe>
+  </div>
+</div>
+</body>
+<script>
+    //固定层移动
+    $(function(){
+        //管理显示与隐藏
+        $("#admin-manager-btn").click(function () {
+            if ($(".manager-menu").css("display") == "none") {
+                $(".manager-menu").css('display', 'block');
+                $("#admin-manager-btn").attr("title","关闭快捷管理");
+                $("#admin-manager-btn").removeClass().addClass("arrow-close");
+            }
+            else {
+                $(".manager-menu").css('display', 'none');
+                $("#admin-manager-btn").attr("title","显示快捷管理");
+                $("#admin-manager-btn").removeClass().addClass("arrow");
+            }
+        });
+    });
+</script>
+</html>

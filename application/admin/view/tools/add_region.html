@@ -1,0 +1,36 @@
+{layout name="public/layout" /}
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+    <!--新增数据，包括本级数据新增，和子级数据新增start-->
+    <div id="add_region">
+        <div class="page">
+            <div class="fixed-bar">
+                <div class="item-title"><a class="back" onclick="javascript:history.back()" title="返回列表"><i class="fa fa-arrow-circle-o-left"></i></a>
+                    <div class="subject">
+                        <h3>地区设置 - 新增</h3>
+                        <h5>地区新增与编辑</h5>
+                    </div>
+                </div>
+            </div>
+            <form id="add_region_form" method="post" action="{:url('add_region')}">
+                <input type="hidden" name="parent_id" value="{$parent_id}">
+                <input type="hidden" name="back_id" value="{$back_id}">
+                <div class="ncap-form-default">
+                    <dl class="row">
+                        <dt class="tit">
+                            <label for="name"><em>*</em>地区名</label>
+                        </dt>
+                        <dd class="opt">
+                            <input id="name" name="name" value="" maxlength="20" class="input-txt" type="text">
+                            <span class="err"></span>
+                            <p class="notic">请认真填写地区名称，地区设定后将直接影响订单、收货地址等重要信息，请谨慎操作。</p>
+                        </dd>
+                    </dl>
+                    <div class="bot"><a href="JavaScript:void(0);" class="ncap-btn-big ncap-btn-green" onclick="$('#add_region_form').submit();">确认提交</a></div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--新增数据end-->
+</div>

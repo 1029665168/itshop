@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="{$Think.const.COMMON_STATIC}jquery/jquery-3.1.1.min.js"></script>
+    <style>
+        .content{
+            margin: 0 auto;
+            width: 800px;
+            height: 500px;
+            background-color: #eeeeee;
+            border: 1px solid #56cbee;
+        }
+        .chat_title{
+            width: 800px;
+            height: 35px;
+            background-color: #cccccc;
+            line-height: 35px;
+            text-indent: 10px;
+            font-size: 17px;
+        }
+        .chat_content{
+            width: 800px;
+            height: 465px;
+            margin: 0 auto;
+            background-color: #fff;
+        }
+        .member{
+            float: left;
+            margin-left: 10px;
+            width: 130px;
+            height: 465px;
+            border-right: 1px solid #eeeeee;
+        }
+        .member .member_title{
+            font-size: 15px;
+            margin-top: 10px;
+        }
+        .member .member_list{
+            margin-top: 5px;
+            font-size: 14px;
+            height: 425px;
+            overflow-y:scroll
+        }
+        .member .member_list ul{
+            padding: 0;
+            margin: 0;
+        }
+        .member .member_list ul li{
+            text-decoration: none;
+            text-align: left;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            height: 25px;
+            line-height: 25px;
+            text-indent: 5px;
+        }
+        .message{
+            float: left;
+            margin-left: 10px;
+            width: 640px;
+            height: 300px;
+            background-color: #ffebe8;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <div class="chat_title">高三一班</div>
+        <div class="chat_content">
+            <div class="member">
+                <div class="member_title">群成员21/86</div>
+                <div class="member_list">
+                    <ul>
+                        <li>戏如雪</li>
+                        <li>张无忌</li>
+                        <li>刘德盛</li>
+                        <li>朝气蓬勃</li>
+                        <li>达沃斯大</li>
+                        <li>戏如雪</li>
+                        <li>张无忌</li>
+                        <li>刘德盛</li>
+                        <li>朝气蓬勃</li>
+                        <li>达沃斯大</li>
+                        <li>戏如雪</li>
+                        <li>张无忌</li>
+                        <li>刘德盛</li>
+                        <li>朝气蓬勃</li>
+                        <li>达沃斯大</li>
+                        <li>戏如雪</li>
+                        <li>张无忌</li>
+                        <li>刘德盛</li>
+                        <li>朝气蓬勃</li>
+                        <li>达沃斯大</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="message">
+
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    $(document).ready(function () {
+        document_center(".content");
+        
+        $(".member_list ul li").click(function () {
+           $(this).siblings().css('background-color','#fff').css('color','#000') ;
+           $(this).css('background-color','#90dece').css('color','#fff') ;
+        });
+        
+        $(".member_title").on("click",function () {
+            $(".member_list").fadeToggle();
+        });
+
+
+
+        /*
+        * 窗口居中处理
+        * @param  class_name class名称或者id名称
+        * */
+        function document_center(class_name) {
+            var document_width = $(document).outerWidth(true);//浏览器时下窗口文档body的总宽度 包括border padding margin
+            var document_height = $(document).outerHeight(true);//浏览器时下窗口文档body的总高度 包括border padding margin
+            var content_width = $(class_name).width();
+            var content_heigth = $(class_name).height();
+            if(document_width>content_width){
+                var top_width = (document_width-content_width)/2;
+            }else{
+                var top_width = 0;
+            }
+            if(document_height>content_heigth){
+                var top_height = (document_height-content_heigth)/2;
+            }else{
+                var top_height = 0;
+            }
+            //$(".content").css('margin-top',top_height+'px').css('margin-left',top_width+'px');
+            $(class_name).css('margin-top',top_height+'px');
+        }
+
+
+    });
+</script>
+</html>

@@ -1,0 +1,191 @@
+{layout name="public/layout" /}
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+  <div class="fixed-bar">
+    {include file="system/config_tab"}
+  </div>
+  <!-- 操作说明 -->
+  <div class="explanation" id="explanation">
+    <div class="title" id="checkZoom"><i class="fa fa-lightbulb-o"></i>
+      <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
+      <span id="explanationZoom" title="收起提示"></span> </div>
+    <ul>
+      <li>系统平台全局设置,包括基础设置、购物、短信、邮件、水印和分销等相关模块。</li>
+    </ul>
+  </div>
+  <form method="post" id="handlepost" action="{:url('save_config')}" enctype="multipart/form-data" name="form1">
+    <div class="ncap-form-default">
+      <dl class="row">
+        <dt class="tit">
+          <label for="record_no">网站备案号</label>
+        </dt>
+        <dd class="opt">
+          <input id="record_no" name="record_no" value="{$config.record_no?$config.record_no:''}" class="input-txt" type="text" />
+          <p class="notic">网站备案号，将显示在前台底部欢迎信息等位置</p>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label for="web_name">网站名称</label>
+        </dt>
+        <dd class="opt">
+          <input id="web_name" name="web_name" value="{$config.web_name?$config.web_name:''}" class="input-txt" type="text" />
+          <p class="notic">网站名称，将显示在前台顶部欢迎信息等位置</p>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label for="web_logo">网站Logo</label>
+        </dt>
+        <dd class="opt">
+          <div class="input-file-show">
+                        <span class="show">
+                            <a id="img_a" class="nyroModal" rel="gal" href="{$config.web_logo?$config.web_logo:''}">
+                                <i id="img_i" class="fa fa-picture-o" onmouseover="layer.tips('<img src={$config.web_logo?$config.web_logo:\'\'}>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"></i>
+                            </a>
+                        </span>
+            <span class="type-file-box">
+                            <input type="text" id="web_logo" name="web_logo" value="{$config.web_logo?$config.web_logo:''}" class="type-file-text">
+                            <input type="button" name="button" id="button1" value="选择上传..." class="type-file-button">
+                            <input class="type-file-file" onClick="GetUploadify(1,'img_call_back')" size="30" hidefocus="true" nc_type="change_site_logo" title="点击前方预览图可查看大图，点击按钮选择文件并提交表单后上传生效">
+                        </span>
+          </div>
+          <span class="err"></span>
+          <p class="notic">默认网站LOGO,通用头部显示，最佳显示尺寸为240*60像素</p>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label for="web_title">网站标题</label>
+        </dt>
+        <dd class="opt">
+          <input id="web_title" name="web_title" value="{$config.web_title?$config.web_title:''}" class="input-txt" type="text" />
+          <p class="notic">网站标题，将显示在前台顶部欢迎信息等位置</p>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label for="web_desc">网站描述</label>
+        </dt>
+        <dd class="opt">
+          <input id="web_desc" name="web_desc" value="{$config.web_desc?$config.web_desc:''}" class="input-txt" type="text" />
+          <p class="notic">网站描述，将显示在前台顶部欢迎信息等位置</p>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label for="web_keyword">网站关键字</label>
+        </dt>
+        <dd class="opt">
+          <input id="web_keyword" name="web_keyword" value="{$config.web_keyword?$config.web_keyword:''}" class="input-txt" type="text" />
+          <p class="notic">网站关键字，便于SEO</p>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label for="web_contact">联系人</label>
+        </dt>
+        <dd class="opt">
+          <input id="web_contact" name="web_contact" value="{$config.web_contact?$config.web_contact:''}" class="input-txt" type="text" />
+          <p class="notic">联系人</p>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label for="web_phone">联系电话</label>
+        </dt>
+        <dd class="opt">
+          <input id="web_phone" name="web_phone" value="{$config.web_phone?$config.web_phone:''}" class="input-txt" type="text" />
+          <p class="notic">商家中心右下侧显示，方便商家遇到问题时咨询</p>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label for="web_mobile">联系手机</label>
+        </dt>
+        <dd class="opt">
+          <input name="web_mobile" id="web_mobile" value="{$config.web_mobile?$config.web_mobile:''}" class="input-txt" type="text" />
+          <p class="notic">1.商家中心右下侧显示，方便商家遇到问题时咨询</p>
+          <p class="notic">2.客服电话, 当用户下单时接收下单提示短信</p>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label for="web_address">具体地址</label>
+        </dt>
+        <dd class="opt">
+          <select onchange="get_city(this)" id="province" name="web_province">
+            <option  value="0">选择省份</option>
+            {volist name="province" id="vo"}
+                <option  value="{$vo.id}" {eq name="vo.id" value="$config.web_province"}selected="selected"{/eq} >{$vo.name}</option>
+            {/volist}
+          </select>
+          <select onchange="get_area(this);" id="city" name="web_city">
+            <option value="0">选择城市</option>
+            {$city}
+          </select>
+          <select id="area" name="web_area">
+            <option value="0">选择区域</option>
+            {$area}
+          </select>
+          <input id="web_address" name="web_address" value="{$config.web_address?$config.web_address:''}" class="input-txt" type="text" />
+          <p class="notic">具体地址</p>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label for="web_qq">平台客服QQ1</label>
+        </dt>
+        <dd class="opt">
+          <input id="web_qq" name="web_qq" value="{$config.web_qq?$config.web_qq:''}" class="input-txt" type="text">
+          <span class="err"></span>
+          <p class="notic">商家中心右下侧显示，方便商家遇到问题时咨询</p>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label for="web_qq2">平台客服QQ2</label>
+        </dt>
+        <dd class="opt">
+          <input id="web_qq2" name="web_qq2" value="{$config.web_qq2?$config.web_qq2:''}" class="input-txt" type="text">
+          <span class="err"></span>
+          <p class="notic">商家中心右下侧显示，方便商家遇到问题时咨询</p>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label for="web_qq3">平台客服QQ3</label>
+        </dt>
+        <dd class="opt">
+          <input id="web_qq3"  name="web_qq3" value="{$config.web_qq3?$config.web_qq3:''}" class="input-txt" type="text">
+          <span class="err"></span>
+          <p class="notic">商家中心右下侧显示，方便商家遇到问题时咨询</p>
+        </dd>
+      </dl>
+      <div class="bot">
+        <input type="hidden" name="config_type" value="{$config.config_type}">
+        <a href="JavaScript:void(0);" class="ncap-btn-big ncap-btn-green" onclick="document.form1.submit()">确认提交</a>
+      </div>
+    </div>
+  </form>
+</div>
+<div id="goTop"> <a href="JavaScript:void(0);" id="btntop"><i class="fa fa-angle-up"></i></a><a href="JavaScript:void(0);" id="btnbottom"><i class="fa fa-angle-down"></i></a></div>
+<script type="text/javascript">
+
+    // 图片上传成功后，调用此方法
+    function img_call_back(fileurl_tmp)
+    {
+        if(fileurl_tmp!=''){
+            if(fileurl_tmp.length ==1){
+                fileurl_tmp = fileurl_tmp[0];
+                $("#web_logo").val(fileurl_tmp);
+                $("#img_a").attr('href', fileurl_tmp);
+                $("#img_i").attr('onmouseover', "layer.tips('<img src="+fileurl_tmp+">',this,{tips: [1, '#fff']});");
+            }
+        }
+    }
+
+    //市级信息显示，区级信息显示
+
+</script>

@@ -1,0 +1,203 @@
+{layout name="public/layout" /}
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+  <div class="fixed-bar">
+    {include file="system/config_tab"}
+  </div>
+  <!-- 操作说明 -->
+  <div class="explanation" id="explanation">
+    <div class="title" id="checkZoom"><i class="fa fa-lightbulb-o"></i>
+      <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
+      <span id="explanationZoom" title="收起提示"></span> </div>
+    <ul>
+      <li>系统平台全局设置,包括基础设置、购物、短信、邮件、水印和分销等相关模块。</li>
+    </ul>
+  </div>
+  <form method="post" id="handlepost" action="{:url('save_config')}" enctype="multipart/form-data" name="form1">
+    <div class="ncap-form-default">
+      <dl class="row">
+        <dt class="tit">商品图片添加水印</dt>
+        <dd class="opt">
+          <div class="onoff">
+            <label for="water_enable1" class="cb-enable {eq name='$config.water_enable' value='1'}selected{/eq}" >开启</label>
+            <label for="water_enable0" class="cb-disable {eq name='$config.water_enable' value='0'}selected{/eq}" >关闭</label>
+            <input id="water_enable1" name="water_enable" value="1"  type="radio" {eq name="$config.water_enable" value="1"}checked="checked"{/eq} >
+            <input id="water_enable0" name="water_enable" value="0"  type="radio" {eq name="$config.water_enable" value="0"}checked="checked"{/eq} >
+          </div>
+          <p class="notic">商品图片添加水印</p>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">水印类型</dt>
+        <dd class="opt">
+          <div class="onoff">
+            <label for="water_type1" class="cb-enable {eq name='$config.water_type' value='text'}selected{/eq}" >文字</label>
+            <label for="water_type0" class="cb-disable {eq name='$config.water_type' value='img'}selected{/eq}" >图片</label>
+            <input id="water_type1" onclick="setwarter('text')" name="water_type" value="text"  type="radio" {eq name="$config.water_type" value="text"}checked="checked"{/eq} >
+            <input id="water_type0" onclick="setwarter('img')" name="water_type"  value="img"  type="radio" {eq name="$config.water_type" value="img"}checked="checked"{/eq} >
+          </div>
+          <p class="notic">水印类型</p>
+        </dd>
+      </dl>
+      <dl class="row" id="texttr" style="display:none;">
+        <dt class="tit">
+          <label for="water_txt">水印文字</label>
+        </dt>
+        <dd class="opt">
+          <input name="water_txt" id="water_txt" value="{$config.water_txt?$config.water_txt:''}" class="input-txt" type="text" />
+          <p class="notic">水印文字</p>
+        </dd>
+      </dl>
+        <dl class="row">
+            <dt class="tit">
+                <label for="water_img">水印图片</label>
+            </dt>
+            <dd class="opt">
+                <div class="input-file-show">
+                        <span class="show">
+                            <a id="img_a" class="nyroModal" rel="gal" href="{$config.water_img?$config.water_img:''}">
+                                <i id="img_i" class="fa fa-picture-o" onmouseover="layer.tips('<img src={$config.water_img?$config.water_img:\'\'}>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"></i>
+                            </a>
+                        </span>
+                    <span class="type-file-box">
+                            <input type="text" id="water_img" name="water_img" value="{$config.water_img?$config.water_img:''}" class="type-file-text">
+                            <input type="button" name="button" id="button1" value="选择上传..." class="type-file-button">
+                            <input class="type-file-file" onClick="GetUploadify(1,'img_call_back')" size="30" hidefocus="true" nc_type="change_site_logo" title="点击前方预览图可查看大图，点击按钮选择文件并提交表单后上传生效">
+                        </span>
+                </div>
+                <span class="err"></span>
+                <p class="notic">商品上传添加的水印图片</p>
+            </dd>
+        </dl>
+      <dl class="row">
+        <dt class="tit">水印添加条件</dt>
+        <dd class="opt">
+          <ul class="nofloat">
+            <li>
+              <input pattern="^\d{1,}$" value="{$config.water_width?$config.water_width:''}" name="water_width" id="water_width" checked="checked" type="text">
+              <span class="err">只能输入整数</span>
+              <label for="water_width">图片宽度 单位像素(px)</label>
+            </li>
+            <li>
+              <input pattern="^\d{1,}$" value="{$config.water_height?$config.water_height:''}" name="water_height" id="water_height" checked="checked" type="text">
+              <label for="water_height">图片高度 单位像素(px)</label>
+            </li>
+          </ul>
+          <p class="notic">水印的宽度和高度</p>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label for="water_degree">水印透明度</label>
+        </dt>
+        <dd class="opt">
+          <input pattern="^\d{1,}$" onChange="$('#water_degree2').empty().html(this.value);" name="water_degree" id="water_degree" value="{$config.water_degree?$config.water_degree:'50'}" class="input-txt" type="range" min="0" step="2" max="100">
+          <span class="err" id="water_degree2">{$config.water_degree?$config.water_degree:'50'}</span>
+          <p class="notic">0代表完全透明，100代表不透明</p>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label for="water_degree">JPEG 水印质量</label>
+        </dt>
+        <dd class="opt">
+          <input pattern="^\d{1,}$" onChange="$('#water_quality2').empty().html(this.value);" name="water_quality" id="water_quality" value="{$config.water_quality?$config.water_quality:'60'}" class="input-txt" type="range" min="0" step="2" max="100">
+          <span class="err" id="water_quality2">{$config.water_quality?$config.water_quality:'50'}</span>
+          <p class="notic">水印质量请设置为0-100之间的数字,决定 jpg 格式图片的质量</p>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label for="water_degree">JPEG 水印质量</label>
+        </dt>
+        <dd class="opt">
+          <div style="height:124px; background:#fff">
+                                                <span class="span_1">
+                                                        <ul>
+                                                            <li><input type="radio" name="water_position" value="1" {eq name="$config.water_position" value="1"}checked="checked"{/eq}
+                                                            >&nbsp;顶部居左
+                                                            </li>
+                                                            <li><input type="radio" name="water_position" value="2" {eq name="$config.water_position" value="2"}checked="checked"{/eq}
+                                                            >&nbsp;中部居左
+                                                            </li>
+                                                            <li><input type="radio" name="water_position" value="3" {eq name="$config.water_position" value="3"}checked="checked"{/eq}
+                                                            >&nbsp;底部居左
+                                                            </li>
+                                                        </ul>
+                                                </span>
+            <span class="span_1">
+                                                        <ul>
+                                                            <li><input type="radio" name="water_position" value="4" {eq name="$config.water_position" value="4"}checked="checked"{/eq}
+                                                            >&nbsp;顶部居中
+                                                            </li>
+                                                            <li><input type="radio" name="water_position" value="5" {eq name="$config.water_position" value="5"}checked="checked"{/eq}
+                                                            >&nbsp;中部居中
+                                                            </li>
+                                                            <li><input type="radio" name="water_position" value="6" {eq name="$config.water_position" value="6"}checked="checked"{/eq}
+                                                            >&nbsp;底部居中
+                                                            </li>
+                                                        </ul>
+                                                </span>
+            <span class="span_1">
+                                                        <ul>
+                                                            <li><input type="radio" name="water_position" value="7" {eq name="$config.water_position" value="7"}checked="checked"{/eq}
+                                                            >&nbsp;顶部居右
+                                                            </li>
+                                                            <li><input type="radio" name="water_position" value="8" {eq name="$config.water_position" value="8"}checked="checked"{/eq}
+                                                            >&nbsp;中部居右
+                                                            </li>
+                                                            <li><input type="radio" name="water_position" value="9"  {eq name="$config.water_position" value="9"}checked="checked"{/eq} >&nbsp;底部居右
+                                                            </li>
+                                                        </ul>
+                                                </span>
+            <div style="clear:both;"></div>
+          </div>
+        </dd>
+      </dl>
+      <input type="hidden" name="config_type" value="{$config.config_type}">
+      <div class="bot"><a href="JavaScript:void(0);" class="ncap-btn-big ncap-btn-green" onclick="$('#handlepost').submit()">确认提交</a></div>
+    </div>
+  </form>
+</div>
+<div id="goTop"> <a href="JavaScript:void(0);" id="btntop"><i class="fa fa-angle-up"></i></a><a href="JavaScript:void(0);" id="btnbottom"><i class="fa fa-angle-down"></i></a></div>
+<script>
+    function adsubmit(){
+        $('#handlepost').submit();
+    }
+
+    $(document).ready(function(){
+        get_province();
+        var watertype = "";
+        if(watertype == 'text'){
+            $('#texttr').show();
+        }else{
+            $('#imgtr').show();
+        }
+    });
+
+
+    // 上传水印图片成功回调函数
+    function img_call_back(fileurl_tmp)
+    {
+        if(fileurl_tmp!=''){
+            if(fileurl_tmp.length ==1){
+                fileurl_tmp = fileurl_tmp[0];
+                $("#water_img").val(fileurl_tmp);
+                $("#img_a").attr('href', fileurl_tmp);
+                $("#img_i").attr('onmouseover', "layer.tips('<img src="+fileurl_tmp+">',this,{tips: [1, '#fff']});");
+            }
+        }
+    }
+
+    function setwarter(watertype){
+        if(watertype == 'text'){
+            $('#texttr').show();
+            $('#imgtr').hide();
+        }else{
+            $('#texttr').hide();
+            $('#imgtr').show();
+        }
+    }
+    setwarter('{$config.water_type}');
+</script>

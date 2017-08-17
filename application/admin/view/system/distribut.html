@@ -1,0 +1,132 @@
+{layout name="public/layout" /}
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+  <div class="fixed-bar">
+    {include file="system/config_tab"}
+  </div>
+  <!-- 操作说明 -->
+  <div class="explanation" id="explanation">
+    <div class="title" id="checkZoom"><i class="fa fa-lightbulb-o"></i>
+      <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
+      <span id="explanationZoom" title="收起提示"></span> </div>
+    <ul>
+      <li>系统平台全局设置,包括基础设置、购物、短信、邮件、水印和分销等相关模块。</li>
+    </ul>
+  </div>
+  <form method="post" id="handlepost" action="{:url('save_config')}" enctype="multipart/form-data" name="form1">
+    <div class="ncap-form-default">
+      <dl class="row">
+        <dt class="tit">分销开关</dt>
+        <dd class="opt">
+          <div class="onoff">
+            <label for="distribut_enable1" class="cb-enable  {eq name='$config.distribut_enable' value='1'}selected{/eq}">开启</label>
+            <label for="distribut_enable0" class="cb-disable {eq name='$config.distribut_enable' value='0'}selected{/eq}">关闭</label>
+            <input type="radio" id="distribut_enable1"  name="distribut_enable" value="1" {eq name="$config.distribut_enable" value="1"}checked="checked"{/eq} >
+            <input type="radio" id="distribut_enable0" name="distribut_enable" value="0" {eq name="$config.distribut_enable" value="0"}checked="checked"{/eq} >
+          </div>
+          <p class="notic">分销开关</p>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label for="distribut_date">分销模式</label>
+        </dt>
+        <dd class="opt">
+          <select name="distribut_pattern" id="distribut_pattern">
+            <option value="0" {eq name="$config.distribut_pattern" value="0"}selected="selected"{/eq}>按商品设置的分成金额</option>
+            <option value="1" {eq name="$config.distribut_pattern" value="1"}selected="selected"{/eq}>按订单设置的分成比例</option>
+          </select>
+          <p class="notic">分销模式</p>
+        </dd>
+      </dl>
+      <dl class="row" style="display:none" id="distribut_order_rate">
+        <dt class="tit">
+          <label>订单默认分成比例</label>
+        </dt>
+        <dd class="opt">
+          <input name="distribut_order_rate" value="{$config.distribut_order_rate?$config.distribut_order_rate:'30'}" onpaste="this.value=this.value.replace(/[^\d]/g,'')" onkeyup="this.value=this.value.replace(/[^\d]/g,'')" class="input-txt" type="text">
+          <p class="notic">订单默认分成比例</p>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label>一级分销商比例</label>
+        </dt>
+        <dd class="opt">
+          <input name="distribut_first_rate" id="distribut_first_rate" value="{$config.distribut_first_rate?$config.distribut_first_rate:'70'}" onpaste="this.value=this.value.replace(/[^\d]/g,'')" onkeyup="this.value=this.value.replace(/[^\d]/g,'')" class="input-txt" type="text">
+          <p class="notic">单位：%</p>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label>二级分销商比例</label>
+        </dt>
+        <dd class="opt">
+          <input name="distribut_second_rate" id="distribut_second_rate" value="{$config.distribut_second_rate?$config.distribut_second_rate:'20'}" onpaste="this.value=this.value.replace(/[^\d]/g,'')" onkeyup="this.value=this.value.replace(/[^\d]/g,'')" class="input-txt" type="text">
+          <p class="notic">单位：%</p>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label>三级分销商比例</label>
+        </dt>
+        <dd class="opt">
+          <input name="distribut_third_rate" id="distribut_third_rate" value="{$config.distribut_third_rate?$config.distribut_third_rate:'10'}" onpaste="this.value=this.value.replace(/[^\d]/g,'')" onkeyup="this.value=this.value.replace(/[^\d]/g,'')" class="input-txt" type="text">
+          <p class="notic">单位：%</p>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label for="distribut_date">分成时间</label>
+        </dt>
+        <dd class="opt">
+          <select name="date" id="distribut_date">
+            {foreach $date_array as $v}
+              <option value="{$v}" {eq name="$config.date" value="$v"}selected="selected"{/eq}>{$v}天</option>
+            {/foreach}
+          </select>
+          <p class="notic">订单收货确认后多少天可以分成</p>
+        </dd>
+      </dl>
+      <div class="bot">
+        <input type="hidden" name="config_type" value="{$config.config_type}">
+        <a href="JavaScript:void(0);" class="ncap-btn-big ncap-btn-green" onclick="adsubmit()">确认提交</a>
+      </div>
+    </div>
+  </form>
+</div>
+<div id="goTop"> <a href="JavaScript:void(0);" id="btntop"><i class="fa fa-angle-up"></i></a><a href="JavaScript:void(0);" id="btnbottom"><i class="fa fa-angle-down"></i></a></div>
+<script>
+    get_distribut_pattern();
+    $('#distribut_pattern').change(function(){
+        if($(this).val() == 1)
+            $('#distribut_order_rate').show();
+        else
+            $('#distribut_order_rate').hide();
+    });
+
+    function adsubmit(){
+        var distribut_first_rate  = $.trim($('#distribut_first_rate').val());
+        var distribut_second_rate = $.trim($('#distribut_second_rate').val());
+        var distribut_third_rate  = $.trim($('#distribut_third_rate').val());
+
+        var rate = parseInt(distribut_first_rate) + parseInt(distribut_second_rate) + parseInt(distribut_third_rate);
+        if(rate > 100)
+        {
+            layer.msg('三个分销商比例总和不得超过100%', {icon: 2,time: 2000});
+            return false;
+        }
+
+        $('#handlepost').submit();
+    }
+
+    /*根据分销模式，展现表单*/
+    function get_distribut_pattern(){
+        var distribut_pattern_val = $('#distribut_pattern').val();
+        if(distribut_pattern_val == 1)
+            $('#distribut_order_rate').show();
+        else
+            $('#distribut_order_rate').hide();
+    }
+</script>

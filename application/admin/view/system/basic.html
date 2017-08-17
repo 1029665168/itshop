@@ -1,0 +1,116 @@
+{layout name="public/layout" /}
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+  <div class="fixed-bar">
+    {include file="system/config_tab"}
+  </div>
+  <!-- 操作说明 -->
+  <div class="explanation" id="explanation">
+    <div class="title" id="checkZoom"><i class="fa fa-lightbulb-o"></i>
+      <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
+      <span id="explanationZoom" title="收起提示"></span> </div>
+    <ul>
+      <li>系统平台全局设置,包括基础设置、购物、短信、邮件、水印和分销等相关模块。</li>
+    </ul>
+  </div>
+  <form method="post" id="handlepost" action="{:url('save_config')}" enctype="multipart/form-data" name="form1">
+    <div class="ncap-form-default">
+      <dl class="row">
+        <dt class="tit">
+          <label for="reg_integral">会员注册赠送积分</label>
+        </dt>
+        <dd class="opt">
+          <input pattern="^\d{1,}$" id="reg_integral" name="reg_integral" value="{$config.reg_integral?$config.reg_integral:'0'}" class="input-txt" type="text">
+          <span class="err">只能输入整数</span>
+
+          <p class="notic">会员注册赠送积分</p>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label for="upload_file_size">附件上传大小</label>
+        </dt>
+        <dd class="opt">
+          <select id="upload_file_size" name="upload_file_size">
+            <option value="1" {eq name="$config.upload_file_size" value="1"}selected="selected"{/eq}>1M</option>
+            <option value="2" {eq name="$config.upload_file_size" value="2"}selected="selected"{/eq}>2M</option>
+            <option value="3" {eq name="$config.upload_file_size" value="3"}selected="selected"{/eq}>3M</option>
+            <option value="5" {eq name="$config.upload_file_size" value="5"}selected="selected"{/eq}>5M</option>
+            <option value="10" {eq name="$config.upload_file_size" value="10"}selected="selected"{/eq}>10M</option>
+            <option value="50" {eq name="$config.upload_file_size" value="50"}selected="selected"{/eq}>50M</option>
+            <option value="100" {eq name="$config.upload_file_size" value="100"}selected="selected"{/eq}>100M</option>
+          </select>
+
+          <p class="notic">附件上传大小限制</p>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label for="default_storage">默认库存</label>
+        </dt>
+        <dd class="opt">
+          <input pattern="^\d{1,}$" id="default_storage" name="default_storage" value="{$config.default_storage?$config.default_storage:'1'}" class="input-txt" type="text">
+          <span class="err">只能输入整数</span>
+
+          <p class="notic">添加商品的默认库存</p>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label for="default_storage">库存预警数</label>
+        </dt>
+        <dd class="opt">
+          <input pattern="^\d{1,}$" name="warning_storage" value="{$config.warning_storage?$config.warning_storage:'1'}" class="input-txt" type="text">
+          <span class="err">只能输入整数</span>
+          <p class="notic">库存预警,当商品库存少于库存预警数，将在商品列表页库存显示红色</p>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label for="withdraw_cash_need">满多少才能提现</label>
+        </dt>
+        <dd class="opt">
+          <input pattern="^\d{1,}$" name="withdraw_cash_need" id="withdraw_cash_need" value="{$config.withdraw_cash_need?$config.withdraw_cash_need:'100'}" class="input-txt" type="text">
+          <span class="err">只能输入整数</span>
+
+          <p class="notic">需超过多少才能提现金额</p>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label for="withdraw_cash_min">最少提现额度</label>
+        </dt>
+        <dd class="opt">
+          <input pattern="^\d{1,}$" name="withdraw_cash_min" id="withdraw_cash_min" value="{$config.withdraw_cash_min?$config.withdraw_cash_min:'100'}" class="input-txt" type="text">
+          <span class="err">只能输入整数</span>
+
+          <p class="notic">最少提现多少，才能体现</p>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label for="invoice_rate">发票税率</label>
+        </dt>
+        <dd class="opt">
+          <input pattern="^(?!0+(?:\.0+)?$)(?:[1-9]\d*|0)(?:\.\d{1,2})?$" name="invoice_rate" id="invoice_rate" value="{$config.invoice_rate?$config.invoice_rate:'6'}" class="input-txt" type="text">%
+          <span class="err">只能输入数字和小数</span>
+          <p class="notic">当买家需要发票的时候就要增加[商品金额]*[税率]的费用</p>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label for="hot_keywords">首页热门搜索词</label>
+        </dt>
+        <dd class="opt">
+          <input id="hot_keywords" name="hot_keywords" value="{$config.hot_keywords?$config.hot_keywords:''}" class="input-txt" type="text">
+          <span class="err">例如:衣|手机|内衣</span>
+          <p class="notic">商家中心右下侧显示，方便商家遇到问题时咨询</p>
+        </dd>
+      </dl>
+      <input type="hidden" name="config_type" value="{$config.config_type}">
+      <div class="bot"><a href="JavaScript:void(0);" class="ncap-btn-big ncap-btn-green" onclick="document.form1.submit()">确认提交</a></div>
+    </div>
+  </form>
+</div>
+<div id="goTop"> <a href="JavaScript:void(0);" id="btntop"><i class="fa fa-angle-up"></i></a><a href="JavaScript:void(0);" id="btnbottom"><i class="fa fa-angle-down"></i></a></div>
