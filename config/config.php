@@ -241,5 +241,5 @@ return [
     // | 自定义设置
     // +----------------------------------------------------------------------
     'md5_unique_char'=>'it_shop',
-    'shop_url'  => 'www.itshop.cn'
+    'shop_url'  => 'www.itshop.cn',
 ];

@@ -79,8 +79,8 @@ class Common extends Controller {
 
     /**
      * 区域信息的组装,option选项中的内容
-     * @param $level，区域等级
      * @param  $parent_id, 父级id
+     * @param $level，区域等级
      * @param  $is_select, 是否带选择的状态，编辑，查看的时候此值为1 ，其他为0
      * @param  $select_id, 如果带默认选中，请填写此值
      * @return string
