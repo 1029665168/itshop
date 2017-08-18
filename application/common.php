@@ -5,12 +5,27 @@
 // | Author: lipeng Date:2017-8-17
 // +----------------------------------------------------------------------
 use think\Db;
+use think\Config;
 
 /* 配置信息修改 */
 error_reporting(E_ERROR | E_PARSE );    // 屏蔽模版中未定义变量报错
 
 
 /*-------------------------------函数库----------------------------------*/
+
+/**
+ * 使用助手函数table时，统一添加上数据库前缀，方便迁移
+ * @param $table_name,不包含前缀的数据库表名
+ * @return string, 完整的表名
+ */
+function get_full_table_name($table_name=''){
+    $table_prefix = Config::get('database.prefix');
+    if(empty($table_name)){
+        return $table_name;
+    }else{
+        return $table_prefix.$table_name;
+    }
+}
 
 /**
  * 根据参数，发送手机短信
@@ -30,7 +45,7 @@ function send_message($mobile,$sms_tpl_code='',$param=array(),$send_scene=null){
     if($send_scene==null && empty($sms_tpl_code)){
         return false;
     }
-    $msg_config_info = Db::table('it_config')->where('name','in','sms_appkey,sms_secretKey,sms_product')->column('value');
+    $msg_config_info = Db::table(get_full_table_name('config'))->where('name','in','sms_appkey,sms_secretKey,sms_product')->column('value');
     if(count($msg_config_info) != 3){
         return false;
     }
@@ -50,7 +65,7 @@ function send_message($mobile,$sms_tpl_code='',$param=array(),$send_scene=null){
     $req ->setSmsFreeSignName($sign_name);
     // 绑定参数
     if($send_scene != null){    // 从数据库中查找并拼接
-        $sms_template = Db::table('it_sms_template')->field('sms_tpl_code,sms_need_key')->where(['send_scene'=>$send_scene])->find();
+        $sms_template = Db::table(get_full_table_name('sms_template'))->field('sms_tpl_code,sms_need_key')->where(['send_scene'=>$send_scene])->find();
         if(!empty($sms_template)){
             if (empty($sms_template['sms_tpl_code'])){
                 return false;

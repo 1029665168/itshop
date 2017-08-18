@@ -35,7 +35,7 @@
           <thead>
           <tr>
             <th class="sign" axis="col0">
-              <div style="width: 24px;"><i class="ico-check"></i></div>
+              <div style="width: 24px;"><i class="ico-check" id="check_all_none"></i></div>
             </th>
             <th align="left" abbr="article_title" axis="col3" class="">
               <div style="text-align: left; width: 100px;" class="">应用场景</div>
@@ -117,6 +117,12 @@
 </div>
 <script>
     $(document).ready(function(){
+        //选中/取消所有表格
+        $("#check_all_none").click(function () {
+            $(this).toggleClass('check_all_none');
+            $('#flexigrid > table>tbody >tr').toggleClass('trSelected');
+        });
+
         // 表格行点击选中切换
         $('#flexigrid > table>tbody >tr').click(function(){
             $(this).toggleClass('trSelected');

@@ -81,7 +81,7 @@ class Smstemplate extends Common {
             'product'=>'西子丝纺'
         );
         $param1 = array(1212,'西子丝纺');
-        $res = send_message('18263638875','',$param1,'user_modify_pwd');
+        $res = send_message('18268638875','',$param1,'user_modify_pwd');
         if($res){
             echo 'ss';
         }else{
