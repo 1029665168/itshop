@@ -21,7 +21,7 @@
           <select  class="small form-control" name="send_scene" id="send_scene">
             <option value="">请选择使用场景</option>
             {foreach $template as $k=>$v}
-            <option value="{$v.send_scene}" data-tpl-name="{$v.sms_tpl_name}" data-tpl-code="{$v.sms_tpl_code}" data-need-key="{$v.sms_need_key}" data-tpl-content="{$v.sms_tpl_content}">{$v.sms_tpl_name}</option>
+            <option value="{$v.send_scene}" data-tpl-name="{$v.sms_tpl_name}" data-tpl-code="{$v.sms_tpl_code}" data-need-key="{$v.sms_need_key}" data-tpl-content="{$v.sms_tpl_content}" {if condition="$info.send_scene eq $v.send_scene"}selected="selected"{/if}>{$v.sms_tpl_name}</option>
             {/foreach}
           </select>
           <span class="err" id="err_send_scene" style="display:none;">请选择使用场景</span>
@@ -34,7 +34,7 @@
           <label for="sms_tpl_code"><em>*</em>短信模板ID</label>
         </dt>
         <dd class="opt">
-          <input type="text" value="" name="sms_tpl_code" id="sms_tpl_code" class="input-txt" readonly="readonly">
+          <input type="text" value="{$info.sms_tpl_code}" name="sms_tpl_code" id="sms_tpl_code" class="input-txt" readonly="readonly">
           <span id="err_sms_tpl_code" class="err" style="display:none;">短信模板ID不能为空</span>
           <p class="notic">必须与阿里大鱼短信模板ID一致</p>
         </dd>
@@ -44,14 +44,14 @@
           <label for="tpl_content"><em>*</em>短信内容</label>
         </dt>
         <dd class="opt">
-          <textarea id="tpl_content" name="tpl_content" class="tarea" rows="6" readonly="readonly"></textarea>
+          <textarea id="tpl_content" name="tpl_content" class="tarea" rows="6" readonly="readonly">{$info.tpl_content}</textarea>
           <span class="err" id="err_tpl_content" style="display:none;">短信内容不能为空</span>
           <p class="notic">为防止误操作, 该内容不可编辑, 大于后台配置短信模板时, 模板内容必须与该内容一致, 否则无法发送短信</p>
         </dd>
       </dl>
-      <input type="hidden" name="sms_tpl_name" id="sms_tpl_name" value="">
-      <input type="hidden" name="sms_need_key" id="sms_need_key" value="">
-      <input type="hidden" name="tpl_id" value="">
+      <input type="hidden" name="sms_tpl_name" id="sms_tpl_name" value="{$info.sms_tpl_name}">
+      <input type="hidden" name="sms_need_key" id="sms_need_key" value="{$info.sms_need_key}">
+      <input type="hidden" name="tpl_id" value="{$info.tpl_id}">
       <div class="bot"><a href="JavaScript:void(0);" onclick="checkForm();" class="ncap-btn-big ncap-btn-green" id="submitBtn">确认提交</a></div>
     </div>
   </form>

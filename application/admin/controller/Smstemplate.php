@@ -8,7 +8,7 @@ namespace app\admin\controller;
 
 class Smstemplate extends Common {
 
-    /* 阿里大于验证码模版参数 */
+    /* 阿里大于验证码模版参数，仅用于后台添加修改时 */
     private  $static_template =array(
         0=>array(
             'sms_tpl_name'=>'用户注册验证码',
@@ -37,6 +37,12 @@ class Smstemplate extends Common {
         if ($this->request->isPost()){
             $data = input('post.');
             if($data['tpl_id'] != ''){  //修改
+                $map['send_scene'] = $data['send_scene'];
+                $map['tpl_id'] = ['<>',$data['tpl_id']];
+                $old_info = db('sms_template')->where($map)->find();
+                if($old_info){
+                    $this->error('信息已经存在！');
+                }
                 $res = db('sms_template')->where('tpl_id',$data['tpl_id'])->update($data);
                 if($res){
                     $this->success('更新成功！');
@@ -58,8 +64,14 @@ class Smstemplate extends Common {
                 }
             }
         }else{
+            $tpl_id = input('?param.tpl_id')?intval(input('param.tpl_id')):0;
+            if($tpl_id>0){
+                $info = db('sms_template')->where('tpl_id',$tpl_id)->find();
+            }else{
+                $info=array();
+            }
             $template = $this->static_template;
-            return $this->fetch('',['template'=>$template]);
+            return $this->fetch('',['template'=>$template,'info'=>$info]);
         }
     }
 
@@ -68,8 +80,8 @@ class Smstemplate extends Common {
             'code'=>rand(1000,9999),
             'product'=>'西子丝纺'
         );
-        $param1 = array(1212,'西子丝纺1');
-        $res = send_message('15869168657','',$param1,'5');
+        $param1 = array(1212,'西子丝纺');
+        $res = send_message('18263638875','',$param1,'user_modify_pwd');
         if($res){
             echo 'ss';
         }else{
