@@ -1,0 +1,12 @@
+{notempty name="info"}
+{volist name="info" id="vo"}
+<tr>
+    <td><a href="{:url('child_detail',array('id'=>$vo.id))}">{$vo.name}</a></td>
+    <td>{$vo.little_name}</td>
+    <td>{eq name="vo.sex" value="1"}男{/eq}{eq name="vo.sex" value="0"}女{/eq}</td>
+    <td>
+        <span class="span_edit"><a href="{:url('child_edit',array('id'=>$vo.id))}">编辑</a></span><span style="width: 3px;display: inline-block"></span><span class="span_del"><a href="javascript:void(0);" data-url="{:url('child_delete',array('id'=>$vo.id))}" onclick="return confirm_del(this)">删除</a></span>
+    </td>
+</tr>
+{/volist}
+{/notempty}

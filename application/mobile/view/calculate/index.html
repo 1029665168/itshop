@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="{$Think.const.MOBILE_STATIC}css/style.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="{$Think.const.MOBILE_STATIC}js/global.js"></script>
+    <script>
+        window.onload = initAll;
+        function  initAll() {
+            var current_time_obj = window.document.getElementById('current_time');
+            current_time_obj.innerText = getCurrentTime();
+            setInterval(function () {
+                current_time_obj.innerText = getCurrentTime();
+            },1000);
+        }
+    </script>
+    <title>周期详情</title>
+    <style>
+        progress{
+            width: 100%;
+            height: 20px;
+        }
+        table{
+            width: 100%;
+            border: none;
+            border-top: 1px solid #ccc;
+            border-left: 1px solid #ccc;
+            text-align: center;
+            font-size: 1rem;
+        }
+        td,th{
+            border-bottom: 1px solid #ccc;
+            border-right: 1px solid #ccc;
+        }
+        .child_name{
+            padding-top: 10px !important;
+            padding-bottom: 10px !important;
+        }
+        .view_more{
+            font-size: 0.9rem;
+        }
+        .view_more a{
+            font-size: 0.9rem;
+            color: green;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+</body>
+<div class="title">
+    <div class="go-back">
+        <span>返回</span>
+    </div>
+    <div class="info-title">
+        <span>周期详情</span>
+    </div>
+</div>
+<div class="content">
+    <div class="week">
+        <h4>时间计算</h4>
+        <p>当前时间：<span id="current_time"></span></p>
+        <p>开始时间：{$start_time}</p>
+        <p>预产时间：{$prev_time}</p>
+        <p>总周期：{$week_count}周</p>
+        <p>当前周期：{$current_week}周（{$current_week*7}天）</p>
+        <p>剩余周期：{$birth_week}周（{$birth_week*7}天）</p>
+    </div>
+    <div class="schedule">
+        <h4>进度条</h4>
+        <progress value="{$current_week}" max="{$week_count}">
+        </progress>
+    </div>
+    <div class="child_name">
+        <table cellspacing="0">
+            <thead>
+            <tr>
+                <th colspan="3">姓名列表</th>
+            </tr>
+            <tr>
+                <th>姓名</th>
+                <th>小名</th>
+                <th>性别</th>
+            </tr>
+            </thead>
+            <tbody>
+            {notempty name="child_info"}
+            {volist name="child_info" id="vo"}
+            <tr>
+                <td>{$vo.name}</td>
+                <td>{$vo.little_name}</td>
+                <td>{eq name="vo.sex" value="1"}男{/eq}{eq name="vo.sex" value="0"}女{/eq}</td>
+            </tr>
+            {/volist}
+            {/notempty}
+            <tr>
+                <td colspan="3" class="view_more"><a href="{:url('child_index')}">添加姓名/查看更多</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="footer">
+    <ul>
+        <li><img src="{$Think.const.MOBILE_STATIC}images/tab-home-normal.png" alt="首页"></li>
+        <li><img src="{$Think.const.MOBILE_STATIC}images/tab-category-normal.png" alt="分类"></li>
+        <li><img src="{$Think.const.MOBILE_STATIC}images/tab-cart-normal.png" alt="购物车"></li>
+        <li><img src="{$Think.const.MOBILE_STATIC}images/tab-profile-active.png" alt="个人中心"></li>
+        <div class="clear"></div>
+    </ul>
+</div>
+</html>

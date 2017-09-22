@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="{$Think.const.MOBILE_STATIC}css/css.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{$Think.const.COMMON_STATIC}bootstrap/css/bootstrap.min.css">
+    <title>详细信息</title>
+</head>
+<body>
+<div class="go_back">
+    <div class="go_back_l" onclick="javascript:history.go(-1)"></div>
+    <div class="go_back_r">详细信息</div>
+</div>
+<div class="detail_content">
+    <table width="100%">
+        <tr>
+            <td width="60">姓名</td>
+            <td style="text-align: left">{$info.name}</td>
+        </tr>
+        <tr>
+            <td>小名</td>
+            <td style="text-align: left">{$info.little_name}</td>
+        </tr>
+        <tr>
+            <td>性别</td>
+            <td style="text-align: left">{eq name="info.sex" value="1"}男{/eq}{eq name="info.sex" value="0"}女{/eq}</td>
+        </tr>
+        <tr>
+            <td>状态</td>
+            <td style="text-align: left">{eq name="info.is_checked" value="1"}<span style="color: green">选中</span>{/eq}{eq name="info.is_checked" value="0"}<span style="color: red">未选中</span>{/eq}</td>
+        </tr>
+        <tr>
+            <td>意义</td>
+            <td style="text-align: left">{$info.intro}</td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

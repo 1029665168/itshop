@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="{$Think.const.MOBILE_STATIC}css/css.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{$Think.const.COMMON_STATIC}bootstrap/css/bootstrap.min.css">
+    <script type="text/javascript" src="{$Think.const.COMMON_STATIC}jquery/jquery.js"></script>
+    <script type="text/javascript" src="{$Think.const.MOBILE_STATIC}js/layer/layer.js"></script>
+    <script type="text/javascript" src="{$Think.const.MOBILE_STATIC}js/global.js"></script>
+    <title>姓名列表</title>
+</head>
+<body>
+<div class="go_back">
+    <div class="go_back_ll" onclick="javascript:window.location.href = '/mobile/calculate/index.html'"></div>
+    <div class="go_back_cc">姓名列表</div>
+    <div class="go_back_rr"><a href="{:url('child_edit')}">添加</a></div>
+</div>
+<div class="list_content">
+    <table>
+        <thead>
+        <tr>
+            <th width="60px">姓名<span></span></th>
+            <th>小名<span></span></th>
+            <th>性别<span></span></th>
+            <th width="80px">操&nbsp;作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="load_more" id="load_more">
+            <td colspan="5" id="load_complete">
+                <span onclick="ajax_get_table('load_more')" style="display: inline-block;width: 100%">点击加载更多</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script>
+    var current_page = {$page};
+    // ajax 抓取页面
+    function ajax_get_table(before_id){
+        $.ajax({
+            type : "POST",
+            url:"{:url('child_list')}"+"?page="+current_page,
+            data : {},
+            success: function(data){
+                current_page = current_page+1; //当前页面 保存为全局变量
+                if(data == ''){
+                    $("#load_complete").html('全部加载完毕！');
+                }
+                $("#"+before_id).before(data);
+            }
+        });
+    }
+    ajax_get_table('load_more');
+</script>
+</body>
+</html>
